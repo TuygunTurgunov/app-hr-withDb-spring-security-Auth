@@ -29,22 +29,19 @@ public class TaskController {
     @PostMapping
     public HttpEntity<?>add(@Valid @RequestBody TaskDto taskDto){
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ApiResponse apiResponse=taskService.add(taskDto,authentication);
+        ApiResponse apiResponse=taskService.add(taskDto);
         return ResponseEntity.status(apiResponse.getIsSuccess()? HttpStatus.CREATED:HttpStatus.CONFLICT).body(apiResponse);
 
     }
     @PatchMapping("/verifyTask")
     public HttpEntity<?> verifyTask(@RequestParam String taskCode, @RequestParam String email, @RequestBody TaskDtoEdit taskDtoEdit) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ApiResponse apiResponse = taskService.verifyTask(taskCode, email,taskDtoEdit,authentication);
+        ApiResponse apiResponse = taskService.verifyTask(taskCode, email,taskDtoEdit);
         return ResponseEntity.status(apiResponse.getIsSuccess() ? 200 : 409).body(apiResponse);
     }
 
     @PatchMapping("/edit/{id}")
     public HttpEntity<?>edit(@PathVariable UUID id,@RequestBody TaskDtoEdit taskDtoEdit){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ApiResponse apiResponse=taskService.edit(id,taskDtoEdit,authentication);
+        ApiResponse apiResponse=taskService.edit(id,taskDtoEdit);
 
 
 
@@ -53,15 +50,15 @@ public class TaskController {
 
     @DeleteMapping("/delete/{id}")
     public HttpEntity<?>delete(@PathVariable UUID id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ApiResponse apiResponse=taskService.delete(id,authentication);
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ApiResponse apiResponse=taskService.delete(id);
         return ResponseEntity.status(apiResponse.getIsSuccess()?200:409).body(apiResponse);
     }
 
     @GetMapping("/query")
     public HttpEntity<?>getByQuery(@RequestBody QueryDto queryDto){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Set<Task> taskList=taskService.getTasksByQuery(queryDto,authentication);
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Set<Task> taskList=taskService.getTasksByQuery(queryDto);
         return ResponseEntity.status(taskList!=null?200:409).body(taskList);
     }
 
@@ -75,8 +72,8 @@ public class TaskController {
     @GetMapping("/{id}")
     public HttpEntity<?>getOneTask(@PathVariable UUID id){
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Task task = taskService.getOneTask(id,authentication);
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Task task = taskService.getOneTask(id);
         return ResponseEntity.status(task!=null?200:409).body(task);
     }
 

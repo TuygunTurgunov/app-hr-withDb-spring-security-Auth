@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -103,8 +104,8 @@ public class SalaryService {
 
     }
 
-    public List<Salary> getInfoByUserId(UUID id, Authentication authentication) {
-
+    public List<Salary> getInfoByUserId(UUID id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User authenticationUser =(User) authentication.getPrincipal();
         for (GrantedAuthority authority : authenticationUser.getAuthorities()) {
             if (authority.getAuthority().equals(RoleName.ROLE_WORKER.name())){
@@ -124,8 +125,9 @@ public class SalaryService {
 
     }
 
-    public List<Salary> getInfoByMonthId(Integer id,Authentication authentication) {
+    public List<Salary> getInfoByMonthId(Integer id) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User authenticationUser =(User) authentication.getPrincipal();
         for (GrantedAuthority authority : authenticationUser.getAuthorities()) {
             if (authority.getAuthority().equals(RoleName.ROLE_WORKER.name())){

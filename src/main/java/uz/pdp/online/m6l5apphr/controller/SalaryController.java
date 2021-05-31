@@ -70,15 +70,15 @@ public class SalaryController {
 
     @GetMapping("/query/byUserId/{id}")
     public HttpEntity<?>getInfoByUserId(@PathVariable UUID id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<Salary> infoByUserId = salaryService.getInfoByUserId(id,authentication);
+
+        List<Salary> infoByUserId = salaryService.getInfoByUserId(id);
         return ResponseEntity.status(infoByUserId!=null?200:409).body(infoByUserId);
     }
 
     @GetMapping("/query/byMonthId/{id}")
     public HttpEntity<?>getInfoByMonthId(@PathVariable Integer id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<Salary> infoByMonthId = salaryService.getInfoByMonthId(id,authentication);
+
+        List<Salary> infoByMonthId = salaryService.getInfoByMonthId(id);
 
         return ResponseEntity.status(infoByMonthId!=null?200:409).body(infoByMonthId);
     }

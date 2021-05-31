@@ -20,7 +20,7 @@ public class CustomService {
     TaskRepository taskRepository;
 
 
-    public void  sendEmail (String sendingEmail, String emailCode,String linkName,String taskName,String taskDescription){
+    public void  sendEmail (String sendingEmail, String taskCode,String linkName,String taskName,String taskDescription){
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom("test@pdp.com");
@@ -28,13 +28,31 @@ public class CustomService {
             mailMessage.setSubject(taskName);
             mailMessage.setText("<h2>"+taskName+"</h2>");
 //            mailMessage.setText("<a href='http://localhost:8080/api/auth/"+verifyName+"?emailCode=" + emailCode + "&email=" + sendingEmail + "'>Tasdiqlang</a>");
-            mailMessage.setText("<button><a href='http://localhost:8080/api/task/"+linkName+"?taskCode=" + emailCode + "&email=" + sendingEmail + "'</a>>Tasdiqlang</button>");
+            mailMessage.setText("<button><a href='http://localhost:8080/api/task/"+linkName+"?taskCode=" + taskCode + "&email=" + sendingEmail + "'</a>>Tasdiqlang</button>");
             javaMailSender.send(mailMessage);
             System.out.println("message send ok");
 
               } catch (Exception e) {
             System.out.println("error in message send");
              }
+
+    }
+
+    public void  sendEmail (String sendingEmail,String taskName, String remember){
+        try {
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setFrom("test@pdp.com");
+            mailMessage.setTo(sendingEmail);
+            mailMessage.setSubject(taskName+". This task "+remember);
+            mailMessage.setText("<h2>"+taskName+"</h2>");
+//            mailMessage.setText("<a href='http://localhost:8080/api/auth/"+verifyName+"?emailCode=" + emailCode + "&email=" + sendingEmail + "'>Tasdiqlang</a>");
+//            mailMessage.setText("<button><a href='http://localhost:8080/api/task/"+linkName+"?taskCode=" + taskCode + "&email=" + sendingEmail + "'</a>>Tasdiqlang</button>");
+            javaMailSender.send(mailMessage);
+            System.out.println("message send ok");
+
+        } catch (Exception e) {
+            System.out.println("error in message send");
+        }
 
     }
 

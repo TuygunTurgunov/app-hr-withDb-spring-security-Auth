@@ -3,6 +3,7 @@ package uz.pdp.online.m6l5apphr.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import uz.pdp.online.m6l5apphr.entity.Turnicet;
 import uz.pdp.online.m6l5apphr.entity.TurnicetHistory;
@@ -82,8 +83,8 @@ public class TurnicetHistoryService {
         return new ApiResponse("turnicet history edited",true);
     }
 
-    public List<TurnicetHistory> getByQuery(TurnicetHistoryQueryDto turnicetHistoryQueryDto, Authentication authentication) {
-
+    public List<TurnicetHistory> getByQuery(TurnicetHistoryQueryDto turnicetHistoryQueryDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User authenticationUser =(User) authentication.getPrincipal();
         for (GrantedAuthority authority : authenticationUser.getAuthorities()) {
             if (authority.getAuthority().equals(RoleName.ROLE_WORKER.name())){

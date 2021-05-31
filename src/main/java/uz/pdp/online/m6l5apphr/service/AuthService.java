@@ -72,14 +72,17 @@ public class AuthService implements UserDetailsService {
                 isManager = false;
             }
             if (authority.getAuthority().equals(RoleName.ROLE_WORKER.name()))
-                return new ApiResponse("worker can'not add worker",false);
+                return new ApiResponse("worker can'not add worker", false);
 
         }
 
 
-        if (isManager)
-            user.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.ROLE_WORKER)));
-
+        if (isManager) {
+            for (GrantedAuthority authority : currentUser.getAuthorities()) {
+                if (authority.getAuthority().equals(RoleName.ROLE_HR_MANAGER.name()))
+                    user.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.ROLE_WORKER)));
+            }
+        }
         //Password ni database ga shifrlab saqlash kere encode qilib
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
@@ -130,11 +133,12 @@ public class AuthService implements UserDetailsService {
             user.setEnabled(true);
             user.setEmailCode(null);
 
-            if (loginDto.getUsername() != null){
+            if (loginDto.getUsername() != null) {
                 Optional<User> optionalUser2 = userRepository.findByEmail(loginDto.getUsername());
                 if (optionalUser2.isPresent())
-                    return new ApiResponse("bunday username bor",false);
-                user.setEmail(loginDto.getUsername());}
+                    return new ApiResponse("bunday username bor", false);
+                user.setEmail(loginDto.getUsername());
+            }
             if (loginDto.getPassword() != null)
                 user.setPassword(passwordEncoder.encode(loginDto.getPassword()));
 
@@ -175,7 +179,6 @@ public class AuthService implements UserDetailsService {
 
 
     /**
-     *
      * @param username
      * @return
      * @throws UsernameNotFoundException

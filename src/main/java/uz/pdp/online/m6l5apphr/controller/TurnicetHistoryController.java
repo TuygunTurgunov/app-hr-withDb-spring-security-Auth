@@ -60,8 +60,8 @@ public class TurnicetHistoryController {
     @GetMapping("/query")
     public HttpEntity<?>getByQuery(@RequestBody TurnicetHistoryQueryDto turnicetHistoryQueryDto){
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<TurnicetHistory >turnicetHistoryList=turnicetHistoryService.getByQuery(turnicetHistoryQueryDto,authentication);
+
+        List<TurnicetHistory >turnicetHistoryList=turnicetHistoryService.getByQuery(turnicetHistoryQueryDto);
         return ResponseEntity.status(turnicetHistoryList!=null?200:409).body(turnicetHistoryList);
 
     }
