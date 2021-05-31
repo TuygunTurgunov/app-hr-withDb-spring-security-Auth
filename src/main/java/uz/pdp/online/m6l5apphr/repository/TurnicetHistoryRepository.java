@@ -11,6 +11,13 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TurnicetHistoryRepository extends JpaRepository<TurnicetHistory, UUID> {
+    /**
+     * Berilgan oraliqda ishchilarni kirib ciqishini tekshirishga
+     * @param turnicet employee turnicet
+     * @param createdAt berilgan oraliq boshi
+     * @param createdAt2 berilgan oraliq oxiri
+     * @return turnicetHistory toifasidagi list
+     */
 
     List<TurnicetHistory>findAllByTurnicetAndCreatedAtBetween(Turnicet turnicet, Timestamp createdAt, Timestamp createdAt2);
 
