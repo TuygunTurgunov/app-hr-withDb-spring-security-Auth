@@ -58,10 +58,10 @@ public class DataLoader implements CommandLineRunner {
 
         if (runFirstWithDataSql &&runDDL.equals("update")){
             User director=new User();
-            director.setFirstName("murod");
-            director.setLastName("rasulov");
-            director.setEmail("murodrasulov1467@gmail.com");
-            director.setPassword(passwordEncoder.encode("1467"));
+            director.setFirstName("tuygun");
+            director.setLastName("turgunov");
+            director.setEmail("yourr@gmail.com");
+            director.setPassword(passwordEncoder.encode("yourPassword"));
             director.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.ROLE_DIRECTOR)));
             director.setEmailCode(UUID.randomUUID().toString());
             userRepository.save(director);//yoki Arrays.asList() qilib agar ko'p user bosa
